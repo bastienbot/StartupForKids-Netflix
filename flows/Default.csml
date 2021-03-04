@@ -1,0 +1,111 @@
+start:
+	say "Salut je suis ton assistant de recherche Netflix !"
+	goto quel_type
+
+quel_type:
+	say Question("Qu'est-ce que tu recherches ?",
+	buttons=[
+		Button("Un film 🎬") as btnmovie,
+		Button("Une série 👮‍♂️") as btnserie,
+		Button("J'aime tout 😍") as btnany
+		])
+	hold
+	remember le_type = event
+  say "Ok, tu aimes donc : {{le_type}}"
+
+
+// ############################################################
+// Toutes les lignes en vertes sont des commentaires, utile pour communiquer :3
+// À toi de jouer maintenant, il va falloir remplir les trous (????) !
+// ############################################################
+
+// 0 - Commence par supprimer la ligne ci-dessous (ligne 23)
+/*
+
+
+  goto quel_genre
+
+quel_genre:
+  // 1 - Écris la question que va poser le chatbot à l'utilisateur
+  say Question("????",
+	buttons=[
+    Button("action"),
+    Button("anime"),
+    Button("documentaires"),
+    Button("drame"),
+    Button("famille"),
+    Button("horreur"),
+    Button("musique"),
+    Button("nature"),
+    Button("romance"),
+    Button("sciencefiction"),
+    Button("thriller")
+		])
+  // 2 - Indique au chatbot d'attendre la réponse de l'utilisateur ici
+  ????
+  // 3 - Indique au chatbot qu'il doit se souvenir de la réponse de l'utilisateur
+  // en la mettant dans une variable (une boite) qu'on appelera  "le_genre"
+  remember ???? = event
+  goto quelle_annee
+  
+quelle_annee:
+  // 4 - Il manque le mot clé pour poser une question
+  say ????("Est-ce que tu souhaites une année en particulier, si oui précise ?",
+	buttons=[
+		Button("Non 🙅‍♀️")
+		])
+  hold
+  remember l_annee = event
+  
+  // 5 - Indique au chatbot qu'il doit se rendre à l'étape quel_tri
+  ???? quel_tri
+
+
+quel_tri:
+  // 6 - Demande à l'utilisateur si il souhaite que les résultats soient triés par date
+  // Ajoute deux boutons : oui et non
+  say ????("Est-ce que tu souhaites que les résultats soient trier par dates ?",
+	buttons=[
+		Button("Oui 🤩"),
+		Button("Non 🙅‍♀️")
+		])
+  // 7 - Indique au chatbot d'attendre la réponse de l'utilisateur ici
+  ?????
+  // 8 - On veut maintenant que le chatbot se souvienne de cette réponse
+  ???? le_tri = event
+  // 9 - Indique au chatbot qu'il doit se rendre à l'étape "affichage"
+  goto ????
+
+affichage:
+  if (le_type == "Un film 🎬") remember le_type = "movie"
+	else if (le_type == "Une série 👮‍♂️") remember le_type = "serie"
+	else remember le_type = "any"
+  if (l_annee == "Non 🙅‍♀️") remember l_annee = "any"
+  if (le_tri == "Oui 🤩") remember le_tri = true
+  else remember le_tri = false
+  do res = Fn("netflix/catalog", genre=le_genre, type=le_type, sort=le_tri, year=l_annee)
+  do cards = []
+  if (res.length() == 0) {
+    say "Je n'ai pas trouvé de film, désolé 😔"
+  }
+  foreach (val, index) in res {
+    do newCard = Card(
+      title=val.title,
+      subtitle=val.synopsis,
+      image_url=val.img,
+      buttons=[Button("En savoir plus", payload=val.title)]
+    )
+    if (index < 6) do cards.push(newCard)
+  }
+  say Carousel(
+    cards = cards
+  )
+  goto moreInfos
+
+moreInfos:
+  hold
+  if (event == "Chercher d'autres films") goto start
+  say Url("https://www.netflix.com/search?q={{event}}", text="{{event}} sur Netflix")
+  say Button("Chercher d'autres films")
+  goto moreInfos
+

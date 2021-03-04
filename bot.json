@@ -1,0 +1,27 @@
+{
+  "id": "589f6df6-f283-48f7-b629-6b1169645b2e",
+  "name": "StartupForKids Netflix",
+  "description": null,
+  "default_flow": "Default",
+  "flows": [
+    {
+      "name": "Default",
+      "description": "Default custom flow",
+      "commands": []
+    }
+  ],
+  "files": [],
+  "functions": [],
+  "apps": [
+    {
+      "name": "netflix/catalog",
+      "description": "This function searches through the available movies and series available on netflix in France.\nQueries are based on type (movie, serie), genre and year. Queries may also be sorted by date only.\n### Type\nIf type parameter is not filled, all types will be returned.\n- any\n- movie\n- serie\n\n### Genre\nIf genre parameter is not filled, all genres will be returned, only one genre can be queried at a time\n- any\n- action\n- anime\n- documentaires\n- drame\n- famille\n- horreur\n- musique\n- nature\n- romance\n- sciencefiction\n- thriller\n\n### Sort\nSort can be true or false, sorting can only be performed from newest to oldest\n\n### Year\nOnly one year at the time can be queried.\n- any\n- 1950/1951/.../2019/2020\n\n\n## Usage\n```\nFn(\"netflix/catalog\", genre=\"thriller\", type=\"movie\", sort=true, year=\"2019\")\n```\n",
+      "args": [],
+      "runtime": "nodejs12.x",
+      "handler": "index.handler",
+      "environment": {},
+      "app_id": "f6bf6f5f-309e-47bd-895b-0469bcb3cadc",
+      "version": "1.0.0"
+    }
+  ]
+}
